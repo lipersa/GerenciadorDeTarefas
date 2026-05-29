@@ -1,0 +1,10 @@
+{% extends "index.html" %}
+
+{% block title %}
+Gerenciador
+{% endblock %}
+
+{% block body %}
+    <h1>Acessar TAREFA</h1>
+    <a href="{{ url_for('tarefas', id_tarefa=1) }}">Ver tarefa</a>
+{% endblock %}
