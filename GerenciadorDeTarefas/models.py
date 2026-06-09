@@ -1,13 +1,18 @@
-from GerenciadorDeTarefas import database
+from GerenciadorDeTarefas import database, login_manager
 from datetime import datetime
+from flask_login import UserMixin
 
-class Usuario(database.Model):
+class Usuario(database.Model, UserMixin):
     id                  = database.Column(database.Integer, primary_key=True)
     nome                = database.Column(database.String(100), nullable=False)
     email               = database.Column(database.String(100), unique=True, nullable=False)
     senha               = database.Column(database.String(100), nullable=False)
     cargo               = database.Column(database.String(50), nullable=False)
     permissionamento    = database.Column(database.String(50), nullable=False)
+
+    @login_manager.user_loader
+    def load_usuario(id_usuario):
+        return Usuario.query.get(int(id_usuario))
 
 class Tarefa(database.Model):
     id                  = database.Column(database.Integer, primary_key=True)
