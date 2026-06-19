@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block title %}Entrar | Gerenciador de Tarefas{% endblock %}
+
+{% block body %}
+    <section class="hero grid grid-2">
+        <div class="stack">
+            <span class="pill">Acesso ao sistema</span>
+            <h1>Entre para acompanhar tarefas, prazos e responsabilidades.</h1>
+            <p class="meta">
+                O projeto continua sendo um gerenciador de tarefas, mas agora com fluxo completo de login,
+                cadastro e perfil como no exemplo do professor.
+            </p>
+            <div class="nav">
+                <a class="button" href="{{ url_for('criarconta') }}">Criar minha conta</a>
+            </div>
+        </div>
+
+        <section class="card">
+            <form method="POST" class="stack">
+                {{ form.hidden_tag() }}
+
+                <div class="field">
+                    {{ form.email.label }}
+                    {{ form.email() }}
+                    {% if form.email.errors %}
+                        <ul class="errors">
+                            {% for erro in form.email.errors %}
+                                <li>{{ erro }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                </div>
+
+                <div class="field">
+                    {{ form.senha.label }}
+                    {{ form.senha() }}
+                    {% if form.senha.errors %}
+                        <ul class="errors">
+                            {% for erro in form.senha.errors %}
+                                <li>{{ erro }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                </div>
+
+                {{ form.botao(class_="button") }}
+            </form>
+        </section>
+    </section>
+{% endblock %}

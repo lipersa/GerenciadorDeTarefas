@@ -1,10 +1,36 @@
-{% extends "index.html" %}
+{% extends "base.html" %}
 
 {% block title %}
 Gerenciador
 {% endblock %}
 
 {% block body %}
-    <h1>Acessar TAREFA</h1>
-    <a href="{{ url_for('tarefas', id_tarefa=1) }}">Ver tarefa</a>
+    <section class="hero stack">
+        <span class="pill">Painel principal</span>
+        <h1>Tarefas ligadas a voce</h1>
+        <p class="meta">
+            Aqui ficam as tarefas criadas por voce ou atribuidas ao seu usuario.
+        </p>
+    </section>
+
+    <section class="card">
+        <div class="task-list">
+            {% for tarefa in tarefas %}
+                <a class="task-item" href="{{ url_for('tarefas', id_tarefa=tarefa.id) }}">
+                    <strong>{{ tarefa.titulo }}</strong>
+                    <div class="meta">Status: {{ tarefa.status }} | Prioridade: {{ tarefa.prioridade }}</div>
+                    <div class="meta">
+                        Criador: {{ tarefa.criador.nome if tarefa.criador else 'Nao informado' }}
+                        {% if tarefa.responsavel %}
+                            | Responsavel: {{ tarefa.responsavel.nome }}
+                        {% endif %}
+                    </div>
+                </a>
+            {% else %}
+                <div class="empty">
+                    Nenhuma tarefa encontrada. Quando voces comecarem a cadastrar tarefas, elas aparecerao aqui.
+                </div>
+            {% endfor %}
+        </div>
+    </section>
 {% endblock %}

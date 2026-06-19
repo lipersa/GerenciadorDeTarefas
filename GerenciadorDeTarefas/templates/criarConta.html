@@ -1,0 +1,72 @@
+﻿{% extends "base.html" %}
+
+{% block title %}Criar Conta | Gerenciador de Tarefas{% endblock %}
+
+{% block body %}
+    <section class="hero grid grid-2">
+        <div class="stack">
+            <span class="pill">Novo acesso</span>
+            <h1>Crie sua conta para começar a organizar as tarefas.</h1>
+            <p class="meta">
+                Depois do cadastro, o sistema ja faz o login e direciona para o perfil do usuario.
+            </p>
+        </div>
+
+        <section class="card">
+            <form method="POST" class="stack">
+                {{ form.hidden_tag() }}
+
+                <div class="field">
+                    {{ form.username.label }}
+                    {{ form.username() }}
+                    {% if form.username.errors %}
+                        <ul class="errors">
+                            {% for erro in form.username.errors %}
+                                <li>{{ erro }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                </div>
+
+                <div class="field">
+                    {{ form.email.label }}
+                    {{ form.email() }}
+                    {% if form.email.errors %}
+                        <ul class="errors">
+                            {% for erro in form.email.errors %}
+                                <li>{{ erro }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                </div>
+
+                <div class="field">
+                    {{ form.senha.label }}
+                    {{ form.senha() }}
+                    {% if form.senha.errors %}
+                        <ul class="errors">
+                            {% for erro in form.senha.errors %}
+                                <li>{{ erro }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                </div>
+
+                <div class="field">
+                    {{ form.confirmeSenha.label }}
+                    {{ form.confirmeSenha() }}
+                    {% if form.confirmeSenha.errors %}
+                        <ul class="errors">
+                            {% for erro in form.confirmeSenha.errors %}
+                                <li>{{ erro }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                </div>
+
+                {{ form.botao_confirmacao(class_="button") }}
+            </form>
+        </section>
+    </section>
+{% endblock %}
+

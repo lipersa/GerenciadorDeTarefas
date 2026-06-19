@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block title %}Perfil | Gerenciador de Tarefas{% endblock %}
+
+{% block body %}
+    <section class="hero stack">
+        <span class="pill">{% if visualizando_proprio_perfil %}Meu perfil{% else %}Perfil do usuario{% endif %}</span>
+        <h1>{{ usuario.nome }}</h1>
+        <p class="meta">{{ usuario.email }} | Cargo: {{ usuario.cargo }} | Acesso: {{ usuario.permissionamento }}</p>
+        <div class="nav">
+            <a class="button" href="{{ url_for('gerenciador') }}">Abrir gerenciador</a>
+        </div>
+    </section>
+
+    <section class="grid grid-2">
+        <article class="card">
+            <h2>Tarefas criadas</h2>
+            <div class="task-list">
+                {% for tarefa in tarefas_criadas %}
+                    <a class="task-item" href="{{ url_for('tarefas', id_tarefa=tarefa.id) }}">
+                        <strong>{{ tarefa.titulo }}</strong>
+                        <div class="meta">Status: {{ tarefa.status }} | Prioridade: {{ tarefa.prioridade }}</div>
+                    </a>
+                {% else %}
+                    <div class="empty">Nenhuma tarefa criada por este usuario ainda.</div>
+                {% endfor %}
+            </div>
+        </article>
+
+        <article class="card">
+            <h2>Tarefas sob responsabilidade</h2>
+            <div class="task-list">
+                {% for tarefa in tarefas_recebidas %}
+                    <a class="task-item" href="{{ url_for('tarefas', id_tarefa=tarefa.id) }}">
+                        <strong>{{ tarefa.titulo }}</strong>
+                        <div class="meta">Status: {{ tarefa.status }} | Prioridade: {{ tarefa.prioridade }}</div>
+                    </a>
+                {% else %}
+                    <div class="empty">Nenhuma tarefa vinculada a este usuario ainda.</div>
+                {% endfor %}
+            </div>
+        </article>
+    </section>
+{% endblock %}

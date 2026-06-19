@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Gerenciador de Tarefas{% endblock %}</title>
+    <style>
+        :root {
+            color-scheme: light;
+            --bg: #f4efe6;
+            --panel: #fffaf3;
+            --panel-alt: #f8e7d0;
+            --ink: #2f241f;
+            --accent: #b85c38;
+            --accent-dark: #8f4324;
+            --line: #d7c2ae;
+            --muted: #6c5d54;
+            --danger: #b63c3c;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: "Segoe UI", sans-serif;
+            background:
+                radial-gradient(circle at top, rgba(184, 92, 56, 0.18), transparent 28%),
+                linear-gradient(180deg, #fbf7f1 0%, var(--bg) 100%);
+            color: var(--ink);
+        }
+
+        a {
+            color: var(--accent-dark);
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 16px;
+            padding: 20px 24px;
+        }
+
+        .brand {
+            font-size: 1.2rem;
+            font-weight: 700;
+        }
+
+        .nav {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .container {
+            max-width: 1080px;
+            margin: 0 auto;
+            padding: 0 24px 32px;
+        }
+
+        .hero,
+        .card {
+            background: var(--panel);
+            border: 1px solid var(--line);
+            border-radius: 20px;
+            box-shadow: 0 16px 40px rgba(70, 41, 26, 0.08);
+        }
+
+        .hero {
+            padding: 32px;
+            margin-bottom: 24px;
+        }
+
+        .card {
+            padding: 24px;
+        }
+
+        .grid {
+            display: grid;
+            gap: 24px;
+        }
+
+        .grid-2 {
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        }
+
+        .stack {
+            display: grid;
+            gap: 16px;
+        }
+
+        .field {
+            display: grid;
+            gap: 8px;
+        }
+
+        .field input {
+            width: 100%;
+            padding: 12px 14px;
+            border-radius: 12px;
+            border: 1px solid var(--line);
+            background: #fff;
+            color: var(--ink);
+        }
+
+        .button {
+            display: inline-block;
+            padding: 12px 18px;
+            border: none;
+            border-radius: 12px;
+            background: var(--accent);
+            color: #fff;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .button:hover {
+            background: var(--accent-dark);
+            text-decoration: none;
+        }
+
+        .message {
+            padding: 12px 14px;
+            border-radius: 12px;
+            margin-bottom: 12px;
+            background: #fce9e9;
+            color: var(--danger);
+            border: 1px solid #efc1c1;
+        }
+
+        .task-list {
+            display: grid;
+            gap: 14px;
+        }
+
+        .task-item {
+            padding: 16px;
+            border-radius: 16px;
+            border: 1px solid var(--line);
+            background: #fff;
+        }
+
+        .meta {
+            color: var(--muted);
+            font-size: 0.95rem;
+        }
+
+        .pill {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 999px;
+            font-size: 0.85rem;
+            background: var(--panel-alt);
+            margin-right: 8px;
+        }
+
+        .empty {
+            padding: 18px;
+            border-radius: 14px;
+            background: #fff;
+            border: 1px dashed var(--line);
+            color: var(--muted);
+        }
+
+        .errors {
+            color: var(--danger);
+            margin: 0;
+            padding-left: 18px;
+        }
+
+        @media (max-width: 640px) {
+            .topbar,
+            .container {
+                padding-left: 16px;
+                padding-right: 16px;
+            }
+
+            .hero,
+            .card {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="topbar">
+        <div class="brand">Gerenciador de Tarefas</div>
+        <nav class="nav">
+            {% if current_user.is_authenticated %}
+                <a href="{{ url_for('gerenciador') }}">Gerenciador</a>
+                <a href="{{ url_for('perfil', id_usuario=current_user.id) }}">Meu perfil</a>
+                <a href="{{ url_for('logout') }}">Sair</a>
+            {% else %}
+                <a href="{{ url_for('homepage') }}">Entrar</a>
+                <a href="{{ url_for('criarconta') }}">Criar conta</a>
+            {% endif %}
+        </nav>
+    </header>
+
+    <main class="container">
+        {% with mensagens = get_flashed_messages(with_categories=true) %}
+            {% if mensagens %}
+                {% for categoria, mensagem in mensagens %}
+                    <div class="message">{{ mensagem }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        {% block body %}{% endblock %}
+    </main>
+</body>
+</html>
