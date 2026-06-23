@@ -12,6 +12,72 @@
         </div>
     </section>
 
+    {% if visualizando_proprio_perfil %}
+        <section class="card stack">
+            <div>
+                <span class="pill">Nova tarefa</span>
+                <h2>Criar tarefa no seu perfil</h2>
+                <p class="meta">As tarefas cadastradas aqui ficam vinculadas ao seu usuario como criador e responsavel.</p>
+            </div>
+
+            <form method="POST" class="stack">
+                {{ form_tarefa.hidden_tag() }}
+
+                <div class="field">
+                    {{ form_tarefa.titulo.label }}
+                    {{ form_tarefa.titulo(placeholder="Ex.: Revisar entregas da semana") }}
+                    {% if form_tarefa.titulo.errors %}
+                        <ul class="errors">
+                            {% for erro in form_tarefa.titulo.errors %}
+                                <li>{{ erro }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                </div>
+
+                <div class="field">
+                    {{ form_tarefa.descricao.label }}
+                    {{ form_tarefa.descricao(rows="4", placeholder="Descreva o que precisa ser feito") }}
+                    {% if form_tarefa.descricao.errors %}
+                        <ul class="errors">
+                            {% for erro in form_tarefa.descricao.errors %}
+                                <li>{{ erro }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                </div>
+
+                <div class="grid grid-2 compact-grid">
+                    <div class="field">
+                        {{ form_tarefa.prazo.label }}
+                        {{ form_tarefa.prazo() }}
+                        {% if form_tarefa.prazo.errors %}
+                            <ul class="errors">
+                                {% for erro in form_tarefa.prazo.errors %}
+                                    <li>{{ erro }}</li>
+                                {% endfor %}
+                            </ul>
+                        {% endif %}
+                    </div>
+
+                    <div class="field">
+                        {{ form_tarefa.prioridade.label }}
+                        {{ form_tarefa.prioridade() }}
+                        {% if form_tarefa.prioridade.errors %}
+                            <ul class="errors">
+                                {% for erro in form_tarefa.prioridade.errors %}
+                                    <li>{{ erro }}</li>
+                                {% endfor %}
+                            </ul>
+                        {% endif %}
+                    </div>
+                </div>
+
+                {{ form_tarefa.botao_confirmacao(class="button") }}
+            </form>
+        </section>
+    {% endif %}
+
     <section class="grid grid-2">
         <article class="card">
             <h2>Tarefas criadas</h2>

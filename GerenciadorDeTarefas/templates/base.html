@@ -16,6 +16,9 @@
             --line: #d7c2ae;
             --muted: #6c5d54;
             --danger: #b63c3c;
+            --success-bg: #e6f4ea;
+            --success-ink: #1f6b38;
+            --success-line: #b9dfc2;
         }
 
         * {
@@ -80,6 +83,7 @@
 
         .card {
             padding: 24px;
+            margin-bottom: 24px;
         }
 
         .grid {
@@ -89,6 +93,10 @@
 
         .grid-2 {
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        }
+
+        .compact-grid {
+            gap: 16px;
         }
 
         .stack {
@@ -101,13 +109,21 @@
             gap: 8px;
         }
 
-        .field input {
+        .field input,
+        .field select,
+        .field textarea {
             width: 100%;
             padding: 12px 14px;
             border-radius: 12px;
             border: 1px solid var(--line);
             background: #fff;
             color: var(--ink);
+            font: inherit;
+        }
+
+        .field textarea {
+            resize: vertical;
+            min-height: 120px;
         }
 
         .button {
@@ -133,6 +149,12 @@
             background: #fce9e9;
             color: var(--danger);
             border: 1px solid #efc1c1;
+        }
+
+        .message.sucesso {
+            background: var(--success-bg);
+            color: var(--success-ink);
+            border-color: var(--success-line);
         }
 
         .task-list {
@@ -208,7 +230,7 @@
         {% with mensagens = get_flashed_messages(with_categories=true) %}
             {% if mensagens %}
                 {% for categoria, mensagem in mensagens %}
-                    <div class="message">{{ mensagem }}</div>
+                    <div class="message {{ categoria }}">{{ mensagem }}</div>
                 {% endfor %}
             {% endif %}
         {% endwith %}
